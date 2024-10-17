@@ -18,6 +18,14 @@ flag prod
   manual:       True
 
 common common-extensions
+  default-extensions:
+    DataKinds,
+    TypeFamilies,
+    TemplateHaskell,
+    LambdaCase,
+    MultiWayIf,
+    BlockArguments,
+    DeriveAnyClass
   default-language: GHC2021
 
 common common-ghc-options
@@ -42,9 +50,19 @@ library
   import: common-ghc-options
   hs-source-dirs: src
   exposed-modules:
-    Valere
+    Valere,
+    Valere.Utils,
+    Valere.Snapshot
   build-depends:
-    base
+    base,
+    time,
+    filepath,
+    pureMD5,
+    hashable,
+    unordered-containers,
+    bytestring,
+    effectful,
+    effectful-th
 
 executable valere-server
   import: common-extensions
@@ -53,7 +71,9 @@ executable valere-server
   main-is: Main.hs 
   hs-source-dirs: app/server
   build-depends:
-    base
+    base,
+    effectful,
+    servant
 
 executable valere-client
   import:         common-extensions
@@ -62,5 +82,7 @@ executable valere-client
   main-is:        Main.hs
   hs-source-dirs: app/client
   build-depends:
-    base 
+    base,
+    effectful,
+    valere
   
